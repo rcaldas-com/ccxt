@@ -1,3 +1,16 @@
-ccxt>=4.4.0
-fastapi>=0.115.0
-uvicorn[standard]>=0.30.0
+# Versoes fixas de proposito.
+#
+# Com '>=' a imagem NAO se atualizava sozinha, ao contrario do que parece:
+# a pipeline so' builda quando o sha deste repo muda, e um release do ccxt
+# la em cima nao toca aqui. E mesmo num build disparado por outra coisa, a
+# camada do 'pip install' fica em cache enquanto este arquivo nao mudar --
+# entao o pip nem rodava. Resultado: 'ccxt>=4.4.0' significava na pratica
+# "a que era a ultima no dia em que alguem furou o cache" (4.5.75, de
+# 23/08), flutuante no nome e congelada no efeito.
+#
+# Fixando, atualizar vira um commit de uma linha aqui: o sha muda (a
+# pipeline detecta), este arquivo muda (o cache invalida), e a versao fica
+# visivel no historico em vez de escondida dentro da imagem.
+ccxt==4.5.77
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
