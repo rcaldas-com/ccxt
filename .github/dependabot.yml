@@ -1,0 +1,24 @@
+# Quem PERCEBE o release. A pipeline sabe reagir a um commit, mas nao tem
+# como saber que o ccxt publicou uma versao nova -- o sha daqui nao muda
+# quando isso acontece. O Dependabot fecha exatamente esse buraco: abre o
+# PR com o bump, o merge vira o commit, e o resto do fluxo ja existe.
+#
+# Semanal e agrupado de proposito: o ccxt publica quase todo dia, e um PR
+# por patch viraria ruido que se aprende a ignorar -- que e' o mesmo efeito
+# de nao ter aviso nenhum.
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 3
+    groups:
+      dependencias:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: deps
